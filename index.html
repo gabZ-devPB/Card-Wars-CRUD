@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#203d2b" />
+  <title>Card Wars — Construtor de Decks</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <div class="backdrop"></div>
+  <div class="ambient ambient-one"></div><div class="ambient ambient-two"></div>
+  <header class="topbar">
+    <a class="brand" href="#inicio" aria-label="Card Wars início">
+      <div class="logo-slot"><img src="public/assets/logo.png" alt="Logo Card Wars" onerror="this.style.display='none';this.parentElement.classList.add('empty')"><span>INSIRA SUA LOGO</span></div>
+    </a>
+    <nav class="main-nav">
+      <button class="nav-link active" data-view="decks"><span>▤</span> Minha coleção</button>
+      <button class="nav-link" data-view="builder"><span>✦</span> Montar deck</button>
+    </nav>
+    <div class="top-actions"><span class="save-indicator"><i></i> Salvamento local</span><button class="avatar">J</button></div>
+  </header>
+
+  <main class="shell">
+    <section class="hero-strip">
+      <div><p class="eyebrow">BEM-VINDO À TERRA DE OOO</p><h1>Hora de montar<br>seu <em>baralho!</em></h1><p class="hero-copy">Chame seu herói, escolha seus terrenos e junte suas cartas favoritas. A batalha começa na mesa de construção.</p>
+        <button class="primary-btn" id="heroCreate">＋ Criar novo deck <span>↗</span></button>
+      </div>
+      <div class="hero-art" aria-hidden="true"><div class="sun"></div><div class="hill hill-back"></div><div class="hill hill-front"></div><div class="castle">♜</div><div class="floating-star">✦</div><div class="floating-star star-two">✧</div></div>
+    </section>
+
+    <section id="decksView" class="view active">
+      <div class="section-heading"><div><p class="eyebrow">SEUS BARALHOS</p><h2>Minha coleção <span id="deckCount" class="count-pill">0</span></h2><p class="muted">Seus baralhos ficam salvos neste dispositivo.</p></div><button class="secondary-btn" id="newDeckBtn">＋ Novo deck</button></div>
+      <div id="deckGrid" class="deck-grid"></div>
+      <div id="emptyState" class="empty-state"><div class="empty-emblem">♜</div><h3>Sua aventura ainda não começou</h3><p>Crie seu primeiro deck e prepare suas cartas para a batalha.</p><button class="primary-btn" id="emptyCreate">Criar meu primeiro deck <span>↗</span></button></div>
+    </section>
+
+    <section id="builderView" class="view">
+      <div class="builder-top"><div><button class="back-link" id="backToDecks">← Voltar aos decks</button><p class="eyebrow">MESA DE CONSTRUÇÃO</p><h2 id="builderTitle">Novo baralho</h2></div><div class="builder-actions"><button class="ghost-btn" id="cancelEdit">Cancelar</button><button class="primary-btn" id="saveDeck">Salvar deck <span>✓</span></button></div></div>
+      <div class="builder-layout">
+        <div class="builder-main">
+          <section class="panel identity-panel"><div class="panel-heading"><div><span class="step">01</span><div><h3>Quem vai para a aventura?</h3><p>Dê um nome ao seu baralho e escolha seu parceiro.</p></div></div><span class="panel-icon">✎</span></div>
+            <label class="field-label" for="deckName">Nome do deck</label><input id="deckName" class="text-input" maxlength="32" placeholder="Ex.: A fúria dos campos..." />
+            <div class="selection-row"><div class="selection-block"><label class="field-label">Seu herói <b>1 obrigatório</b></label><div class="hero-select" id="heroSelect"><div class="select-placeholder">Escolha Finn ou Jake</div></div></div><div class="hero-note"><span>✦</span><p>Seu herói define sua identidade. Escolha aquele que combina com sua estratégia.</p></div></div>
+          </section>
+          <section class="panel"><div class="panel-heading"><div><span class="step">02</span><div><h3>Prepare o campo</h3><p>Escolha os quatro terrenos da sua batalha.</p></div></div><span class="counter" id="landCounter">0 / 4</span></div><div class="landscape-grid" id="landscapeSlots"></div><div class="hint-line">✧ Você pode combinar diferentes tipos de terreno.</div></section>
+          <section class="panel library-panel"><div class="panel-heading"><div><span class="step">03</span><div><h3>Escolha suas cartas</h3><p>Reúna criaturas, construções e magias para a partida.</p></div></div><span class="counter" id="libraryCount">0 cartas</span></div>
+            <div class="library-toolbar"><div class="search-box"><span>⌕</span><input id="cardSearch" placeholder="Buscar carta pelo nome..." /></div><select id="typeFilter" class="filter-select"><option value="Todos">Todos os tipos</option><option value="Criatura">Criaturas</option><option value="Construção">Construções</option><option value="Magia">Magias</option></select><select id="factionFilter" class="filter-select"><option value="Todas">Todas as facções</option><option value="Planície Azul">Planície Azul</option><option value="Campo de Milho">Campo de Milho</option></select></div>
+            <div id="cardLibrary" class="card-library"></div>
+          </section>
+        </div>
+        <aside class="deck-sidebar">
+          <div class="deck-summary panel"><div class="summary-top"><div><p class="eyebrow">NA SUA MOCHILA</p><h3>Seu baralho</h3></div><span class="deck-seal">✦</span></div><div class="big-count"><strong id="totalCards">0</strong><span>cartas<br>no deck</span></div><div class="progress-track"><div id="deckProgress"></div></div><div class="progress-label"><span id="progressText">0 / 40 cartas mínimas</span><span id="progressPercent">0%</span></div><div class="stat-list"><div><span>🧙 Herói</span><b id="heroStat">Pendente</b></div><div><span>🏞 Terrenos</span><b id="landStat">0 / 4</b></div><div><span>🐾 Criaturas</span><b id="creatureStat">0</b></div><div><span>🏰 Construções</span><b id="buildingStat">0</b></div><div><span>✨ Magias</span><b id="spellStat">0</b></div></div><div id="validationBox" class="validation-box warning"><span>✧</span><div><b>Deck incompleto</b><p>Adicione cartas para atingir o mínimo de 40.</p></div></div><button class="primary-btn full-btn" id="saveDeckSide">Salvar deck <span>✓</span></button></div>
+          <div class="deck-list-panel panel"><div class="list-heading"><h3>Cartas selecionadas</h3><span id="selectedCount">0</span></div><div id="selectedCards" class="selected-cards"><p class="selected-empty">Suas cartas adicionadas aparecerão aqui.</p></div></div>
+          <div class="rules-note"><b>📜 Regras da aventura</b><p>40 cartas ou mais · até 3 cópias por carta · 4 terrenos · 1 herói.</p><a href="https://www.carddweeb.com/Resources/Rulebook" target="_blank" rel="noopener">Consultar rulebook ↗</a></div>
+        </aside>
+      </div>
+    </section>
+  </main>
+  <div id="toast" class="toast" role="status"></div>
+  <div id="confirmModal" class="modal-backdrop"><div class="modal"><div class="modal-symbol">✦</div><h3 id="modalTitle">Excluir deck?</h3><p id="modalText">Essa ação não poderá ser desfeita.</p><div class="modal-actions"><button class="ghost-btn" id="modalCancel">Cancelar</button><button class="danger-btn" id="modalConfirm">Excluir</button></div></div></div>
+  <script src="js/cards.js"></script><script src="js/app.js"></script>
+</body>
+</html>
